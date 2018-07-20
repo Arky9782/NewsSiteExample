@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ExchangeRate;
 use App\Service\CategoryManager;
-use App\Service\PostManager;
+use App\Service\PostManagerFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,14 +17,16 @@ class DefaultController extends Controller
     /**
      * @Route("/{page}", name="index", requirements={"page"="\d+"})
      */
-    public function index(CategoryManager $cm, PostManager $pm, Request $request, $page = 0)
+    public function index(CategoryManager $cm, PostManagerFactory $pmf, Request $request, $page = 0)
     {
         $rateRepository = $this->getDoctrine()->getRepository(ExchangeRate::class);
         $rates = $rateRepository->getRates();
 
         $locale = $request->getLocale();
 
-        $posts = $pm->loadAllLatestPostsByLocaleAndPage($locale, $page);
+        $pm = $pmf->getPostManagerByLocale($locale);
+
+        $posts = $pm->loadAllLatestPostsByPage($page);
 
         $categories = $cm->loadCategoriesByLocale($locale);
 
@@ -51,18 +53,19 @@ class DefaultController extends Controller
     /**
      * @Route("/post/{slug}", name="show")
      */
-    public function showPost(CategoryManager $cm, PostManager $pm, $slug, Request $request)
+    public function showPost(CategoryManager $cm, PostManagerFactory $pmf, $slug, Request $request)
     {
         $rateRepository = $this->getDoctrine()->getRepository(ExchangeRate::class);
         $rates = $rateRepository->getRates();
 
         $locale = $request->getLocale();
 
-        $post = $pm->loadPostByLocaleAndSlug($locale, $slug);
+        $pm = $pmf->getPostManagerByLocale($locale);
+        $post = $pm->loadPostBySlug($slug);
         $categories = $cm->loadCategoriesByLocale($locale);
-        $famousPosts = $pm->loadFamousPostsByLocale($locale);
+        $famousPosts = $pm->loadFamousPosts();
 
-        $similarPosts = $pm->loadSimilarPostsByLocaleAndTags($locale, $post);
+        $similarPosts = $pm->loadSimilarPostsByTags($post);
 
         return $this->render('default/show.html.twig', [
             'post' => $post,
@@ -77,7 +80,7 @@ class DefaultController extends Controller
     /**
      * @Route("/category/{category}/{page}", name="get_category_posts")
      */
-    public function getPostsByCategory(CategoryManager $cm, Request $request, $category , PostManager $pm, $page = 0)
+    public function getPostsByCategory(CategoryManager $cm, Request $request, $category , PostManagerFactory $pmf, $page = 0)
     {
         $rateRepository = $this->getDoctrine()->getRepository(ExchangeRate::class);
         $rates = $rateRepository->getRates();
@@ -86,7 +89,8 @@ class DefaultController extends Controller
 
         $categories = $cm->loadCategoriesByLocale($locale);
 
-        $posts = $pm->loadPostsByLocaleAndCategoryAndPage($locale, $category, $page);
+        $pm = $pmf->getPostManagerByLocale($locale);
+        $posts = $pm->loadPostsByCategoryAndPage($category, $page);
 
         if ($request->isXmlHttpRequest()){
 
@@ -115,7 +119,7 @@ class DefaultController extends Controller
      * @Route("/search/{page}", name="search")
      * @Method({"post"})
      */
-    public function search(Request $request, PostManager $pm, CategoryManager $cm, $page = 0)
+    public function search(Request $request, PostManagerFactory $pmf, CategoryManager $cm, $page = 0)
     {
         $text = $request->get('search');
 
@@ -126,7 +130,8 @@ class DefaultController extends Controller
 
         $categories = $cm->loadCategoriesByLocale($locale);
 
-        $posts = $pm->loadPostsByLocaleAndTextAndPage($locale, $text, $page);
+        $pm = $pmf->getPostManagerByLocale($locale);
+        $posts = $pm->loadPostsByTextAndPage($text, $page);
 
         if ($request->isXmlHttpRequest()){
 

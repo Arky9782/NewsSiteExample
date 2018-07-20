@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Post;
-use App\Service\PostManager;
+use App\Interfaces\PostRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Post[]    findAll()
  * @method Post[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PostRepository extends ServiceEntityRepository
+class PostRepository extends ServiceEntityRepository implements PostRepositoryInterface
 {
     public function __construct(RegistryInterface $registry)
     {
@@ -22,9 +22,9 @@ class PostRepository extends ServiceEntityRepository
 
     /**
      * @param int $page
-     * @return Post[]
+     * @return array
      */
-    public function findAllLatestPostsByPage(int $page)
+    public function findAllLatestPostsByPage(int $page): array
     {
         $limit = 11;
         $start = $page * $limit;
@@ -68,7 +68,7 @@ class PostRepository extends ServiceEntityRepository
         return $result;
     }
 
-    public function getFamousPosts()
+    public function getFamousPosts(): array
     {
         $sql = 'SELECT * FROM post INNER JOIN author WHERE DATE(post.created_at) <= DATE_SUB(CURDATE(), INTERVAL 1 DAY) LIMIT 4';
 
@@ -84,7 +84,7 @@ class PostRepository extends ServiceEntityRepository
      * @param $id
      * @return Post[]
      */
-    public function getSimilarPostsByTagName(string $tag, int $id)
+    public function getSimilarPostsByTagName(string $tag, int $postId): array
     {
         $result = $this->createQueryBuilder('p')
             ->innerJoin('p.tags', 't')
@@ -93,7 +93,7 @@ class PostRepository extends ServiceEntityRepository
             ->andWhere('p.id != :id')
             ->orderBy('p.created_at', 'DESC')
             ->setParameter('tag', $tag)
-            ->setParameter('id', $id)
+            ->setParameter('id', $postId)
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();
@@ -106,7 +106,7 @@ class PostRepository extends ServiceEntityRepository
      * @param $page
      * @return Post[]
      */
-    public function findPostsByCategory(string $category, int $page)
+    public function findPostsByCategory(string $category, int $page): array
     {
         $limit = 11;
         $start = $page * $limit;
@@ -130,7 +130,7 @@ class PostRepository extends ServiceEntityRepository
      * @param $page
      * @return Post[]
      */
-    public function findPostsByTextAndPage(string $text, int $page)
+    public function findPostsByTextAndPage(string $text, int $page): array
     {
 
         $limit = 11;

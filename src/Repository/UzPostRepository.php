@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\UzPost;
+use App\Interfaces\PostRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -12,7 +13,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method UzPost[]    findAll()
  * @method UzPost[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UzPostRepository extends ServiceEntityRepository
+class UzPostRepository extends ServiceEntityRepository implements PostRepositoryInterface
 {
     public function __construct(RegistryInterface $registry)
     {
@@ -21,9 +22,9 @@ class UzPostRepository extends ServiceEntityRepository
 
     /**
      * @param int $page
-     * @return Post[]
+     * @return array
      */
-    public function findAllLatestPostsByPage(int $page)
+    public function findAllLatestPostsByPage(int $page): array
     {
         $limit = 11;
         $start = $page * $limit;
@@ -57,17 +58,17 @@ class UzPostRepository extends ServiceEntityRepository
 
     public function getLatestMainPost(): ?Post
     {
-        $result = $this->createQueryBuilder('p')
-            ->where('p.main = 1 AND p.draft = 0')
-            ->orderBy('p.created_at', 'DESC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
+            $result = $this->createQueryBuilder('p')
+                ->where('p.main = 1 AND p.draft = 0')
+                ->orderBy('p.created_at', 'DESC')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
 
-        return $result;
+            return $result;
     }
 
-    public function getFamousPosts()
+    public function getFamousPosts(): array
     {
         $sql = 'SELECT * FROM post INNER JOIN author WHERE DATE(post.created_at) <= DATE_SUB(CURDATE(), INTERVAL 1 DAY) LIMIT 4';
 
@@ -83,7 +84,7 @@ class UzPostRepository extends ServiceEntityRepository
      * @param $id
      * @return Post[]
      */
-    public function getSimilarPostsByTagName(string $tag, int $id)
+    public function getSimilarPostsByTagName(string $tag, int $postId): array
     {
         $result = $this->createQueryBuilder('p')
             ->innerJoin('p.tags', 't')
@@ -92,7 +93,7 @@ class UzPostRepository extends ServiceEntityRepository
             ->andWhere('p.id != :id')
             ->orderBy('p.created_at', 'DESC')
             ->setParameter('tag', $tag)
-            ->setParameter('id', $id)
+            ->setParameter('id', $postId)
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();
@@ -105,7 +106,7 @@ class UzPostRepository extends ServiceEntityRepository
      * @param $page
      * @return Post[]
      */
-    public function findPostsByCategory(string $category, int $page)
+    public function findPostsByCategory(string $category, int $page): array
     {
         $limit = 11;
         $start = $page * $limit;
@@ -129,7 +130,7 @@ class UzPostRepository extends ServiceEntityRepository
      * @param $page
      * @return Post[]
      */
-    public function findPostsByTextAndPage(string $text, int $page)
+    public function findPostsByTextAndPage(string $text, int $page): array
     {
 
         $limit = 11;
@@ -157,6 +158,7 @@ class UzPostRepository extends ServiceEntityRepository
 
         return $posts;
     }
+
 //    /**
 //     * @return UzPost[] Returns an array of UzPost objects
 //     */

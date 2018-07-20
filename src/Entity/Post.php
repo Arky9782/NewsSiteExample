@@ -6,13 +6,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="post", indexes={@ORM\Index(columns={"title"},flags={"fulltext"})})
+ * @ORM\Table(indexes={@ORM\Index(columns={"title"},flags={"fulltext"})})
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Post
 {
-    const SERVER_PATH_TO_IMAGE_FOLDER = '/home/arky/bq/public/upload/images';
+    const PATH_TO_IMAGE_FOLDER = './upload/images/';
 
     /**
      * @ORM\Id()
@@ -251,7 +251,7 @@ class Post
 
         // moves the file to the directory where brochures are stored
         $file->move(
-            self::SERVER_PATH_TO_IMAGE_FOLDER,
+            self::PATH_TO_IMAGE_FOLDER,
             $fileName
         );
 

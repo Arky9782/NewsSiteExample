@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Author
 {
-    const SERVER_PATH_TO_IMAGE_FOLDER = '/home/arky/bq/public/upload/images';
+    const PATH_TO_IMAGE_FOLDER = './upload/images/';
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -49,7 +49,7 @@ class Author
 
         // moves the file to the directory where brochures are stored
         $file->move(
-            self::SERVER_PATH_TO_IMAGE_FOLDER,
+            self::PATH_TO_IMAGE_FOLDER,
             $fileName
         );
 
@@ -146,9 +146,9 @@ class Author
     /**
      * @return mixed
      */
-    public function getPost()
+    public function getPosts()
     {
-        return $this->post;
+        return $this->posts;
     }
 
     /**
@@ -156,7 +156,7 @@ class Author
      */
     public function setPost($post): void
     {
-        $this->post = $post;
+        $this->posts = $post;
     }
 }
 

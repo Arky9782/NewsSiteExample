@@ -12,7 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class UzPost
 {
-    const SERVER_PATH_TO_IMAGE_FOLDER = '/home/arky/bq/public/upload/images';
+    const PATH_TO_IMAGE_FOLDER = './upload/images/';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -259,7 +260,7 @@ class UzPost
 
         // moves the file to the directory where brochures are stored
         $file->move(
-            self::SERVER_PATH_TO_IMAGE_FOLDER,
+            self::PATH_TO_IMAGE_FOLDER,
             $fileName
         );
 
