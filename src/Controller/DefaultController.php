@@ -30,14 +30,13 @@ class DefaultController extends Controller
 
         $categories = $cm->loadCategoriesByLocale($locale);
 
-        if ($request->isXmlHttpRequest()){
-            if($posts) {
+        if ($request->isXmlHttpRequest()) {
+            if ($posts) {
                 return $this->render('default/posts.html.twig', [
                     'posts' => $posts,
                     'locale' => $locale,
                 ]);
-            }
-            else {
+            } else {
                 return new Response(null, 404);
             }
         }
@@ -80,7 +79,7 @@ class DefaultController extends Controller
     /**
      * @Route("/category/{category}/{page}", name="get_category_posts")
      */
-    public function getPostsByCategory(CategoryManager $cm, Request $request, $category , PostManagerFactory $pmf, $page = 0)
+    public function getPostsByCategory(CategoryManager $cm, Request $request, $category, PostManagerFactory $pmf, $page = 0)
     {
         $rateRepository = $this->getDoctrine()->getRepository(ExchangeRate::class);
         $rates = $rateRepository->getRates();
@@ -92,16 +91,14 @@ class DefaultController extends Controller
         $pm = $pmf->getPostManagerByLocale($locale);
         $posts = $pm->loadPostsByCategoryAndPage($category, $page);
 
-        if ($request->isXmlHttpRequest()){
-
-            if($posts) {
+        if ($request->isXmlHttpRequest()) {
+            if ($posts) {
                 return $this->render('default/posts.html.twig', [
                     'posts' => $posts,
                     'locale' => $locale,
                     'category' => $category,
                 ]);
-            }
-            else {
+            } else {
                 return new Response(null, 404);
             }
         }
@@ -133,16 +130,14 @@ class DefaultController extends Controller
         $pm = $pmf->getPostManagerByLocale($locale);
         $posts = $pm->loadPostsByTextAndPage($text, $page);
 
-        if ($request->isXmlHttpRequest()){
-
-            if($posts) {
+        if ($request->isXmlHttpRequest()) {
+            if ($posts) {
                 return $this->render('default/posts.html.twig', [
                     'posts' => $posts,
                     'locale' => $locale,
                     'text' => $text,
                 ]);
-            }
-            else {
+            } else {
                 return new Response(null, 404);
             }
         }

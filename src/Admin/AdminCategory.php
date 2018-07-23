@@ -8,7 +8,6 @@
 
 namespace App\Admin;
 
-
 use App\Entity\Tag;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;

@@ -8,7 +8,6 @@
 
 namespace App\Admin;
 
-
 use App\Entity\Author;
 use App\Entity\Category;
 use App\Entity\Post;
@@ -67,7 +66,7 @@ class AdminPost extends AbstractAdmin
             ->add('main')
             ->end()
             ->with('Tags', ['class' => 'col-md-3'])
-            ->add('tags', EntityType::class,[
+            ->add('tags', EntityType::class, [
                 'class' => Tag::class,
                 'multiple' => true,
                 'choice_label' => 'name'
@@ -92,7 +91,6 @@ class AdminPost extends AbstractAdmin
             ])
             ->end()
         ;
-
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter)

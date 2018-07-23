@@ -8,7 +8,6 @@
 
 namespace App\Admin;
 
-
 use App\Entity\Post;
 use App\Entity\Tag;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -25,7 +24,7 @@ class AdminTag extends AbstractAdmin
     protected function configureFormFields(FormMapper $form)
     {
         $form->add('name', TextType::class)
-            ->add('posts', EntityType::class,[
+            ->add('posts', EntityType::class, [
                 'class' => Post::class,
                 'multiple' => true,
                 'choice_label' => 'title'

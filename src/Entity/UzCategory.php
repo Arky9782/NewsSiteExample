@@ -63,5 +63,4 @@ class UzCategory
     {
         $this->posts = $post;
     }
-
 }

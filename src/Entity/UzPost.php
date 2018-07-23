@@ -250,7 +250,7 @@ class UzPost
 
     public function upload()
     {
-        if($this->file == null) {
+        if ($this->file == null) {
             return;
         }
 
@@ -388,5 +388,4 @@ class UzPost
     {
         $this->viewType = $viewType;
     }
-
 }

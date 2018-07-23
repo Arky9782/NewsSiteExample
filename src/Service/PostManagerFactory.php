@@ -8,7 +8,6 @@
 
 namespace App\Service;
 
-
 use App\Repository\PostRepository;
 use App\Repository\UzPostRepository;
 
@@ -18,7 +17,7 @@ class PostManagerFactory
 
     private $uzPostRepository;
 
-    public function __construct(PostRepository $postRepository,  UzPostRepository $uzPostRepository)
+    public function __construct(PostRepository $postRepository, UzPostRepository $uzPostRepository)
     {
         $this->postRepository = $postRepository;
 
@@ -39,10 +38,7 @@ class PostManagerFactory
                 default:
                     throw new \Exception("Unknown locale");
             }
-        }
-
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return $e->getMessage();
         }
     }

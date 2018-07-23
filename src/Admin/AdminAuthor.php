@@ -8,7 +8,6 @@
 
 namespace App\Admin;
 
-
 use App\Entity\Author;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -21,7 +20,7 @@ class AdminAuthor extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $form)
     {
-        $form->add('fullname', TextType::class,['required' => 'true'])
+        $form->add('fullname', TextType::class, ['required' => 'true'])
              ->add('file', FileType::class, ['required' => 'true', 'label' => 'Avatar']);
     }
 

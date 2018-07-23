@@ -132,7 +132,6 @@ class PostRepository extends ServiceEntityRepository implements PostRepositoryIn
      */
     public function findPostsByTextAndPage(string $text, int $page): array
     {
-
         $limit = 11;
         $start = $page * $limit;
 
@@ -150,8 +149,7 @@ class PostRepository extends ServiceEntityRepository implements PostRepositoryIn
             ->getResult();
 
         $posts = [];
-        foreach ($result as $one)
-        {
+        foreach ($result as $one) {
             unset($one['score']);
             $posts = $one;
         }

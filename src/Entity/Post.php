@@ -241,7 +241,7 @@ class Post
 
     public function upload()
     {
-        if($this->file == null) {
+        if ($this->file == null) {
             return;
         }
 
@@ -379,5 +379,4 @@ class Post
     {
         $this->viewType = $viewType;
     }
-
 }

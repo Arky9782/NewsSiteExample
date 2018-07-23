@@ -8,7 +8,6 @@
 
 namespace App\Service;
 
-
 use App\Repository\CategoryRepository;
 use App\Repository\UzCategoryRepository;
 
@@ -26,21 +25,16 @@ class CategoryManager
 
     public function loadCategoriesByLocale($locale)
     {
-        if($locale == 'ru')
-        {
-
+        if ($locale == 'ru') {
             $categories = $this->categoryRepository->getCategories();
 
 
             return $categories;
         }
-        if($locale == 'uz')
-        {
-
+        if ($locale == 'uz') {
             $categories = $this->uzCategoryRepository->getCategories();
 
             return $categories;
         }
     }
-
 }

@@ -8,12 +8,10 @@
 
 namespace App\Service;
 
-
 use Symfony\Component\DomCrawler\Crawler;
 
 class ExchangeRateParser
 {
-
     private $crawler;
 
     const URL = 'http://cbu.uz/ru/arkhiv-kursov-valyut/xml/';
@@ -21,7 +19,6 @@ class ExchangeRateParser
     public function __construct()
     {
         $this->crawler = new Crawler($this->getXML());
-
     }
 
     public function getXML()
@@ -63,5 +60,4 @@ class ExchangeRateParser
     {
         return $this->crawler->filter('CBU_Curr > CcyNtry[ID="156"] > Rate')->text();
     }
-
 }

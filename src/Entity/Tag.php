@@ -91,12 +91,10 @@ class Tag
      */
     public function addPost(Post $post)
     {
-
         $post->addTag($this);
         $this->posts[] = $post;
 
         return $this;
-
     }
 
     /**

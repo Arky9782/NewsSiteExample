@@ -27,7 +27,6 @@ class UzCategoryRepository extends ServiceEntityRepository
             ->getResult();
 
         return $result;
-
     }
 
 

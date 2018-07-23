@@ -8,7 +8,6 @@
 
 namespace App\Interfaces;
 
-
 interface PostRepositoryInterface
 {
     public function findAllLatestPostsByPage(int $page): array;

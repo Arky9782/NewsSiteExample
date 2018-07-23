@@ -8,7 +8,6 @@
 
 namespace App\Admin;
 
-
 use App\Entity\Author;
 use App\Entity\UzCategory;
 use App\Entity\UzPost;
@@ -93,7 +92,6 @@ class AdminPostUz extends AbstractAdmin
             ])
             ->end()
         ;
-
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter)

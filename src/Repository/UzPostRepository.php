@@ -58,14 +58,14 @@ class UzPostRepository extends ServiceEntityRepository implements PostRepository
 
     public function getLatestMainPost(): ?Post
     {
-            $result = $this->createQueryBuilder('p')
+        $result = $this->createQueryBuilder('p')
                 ->where('p.main = 1 AND p.draft = 0')
                 ->orderBy('p.created_at', 'DESC')
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getOneOrNullResult();
 
-            return $result;
+        return $result;
     }
 
     public function getFamousPosts(): array
@@ -132,7 +132,6 @@ class UzPostRepository extends ServiceEntityRepository implements PostRepository
      */
     public function findPostsByTextAndPage(string $text, int $page): array
     {
-
         $limit = 11;
         $start = $page * $limit;
 
@@ -150,8 +149,7 @@ class UzPostRepository extends ServiceEntityRepository implements PostRepository
             ->getResult();
 
         $posts = [];
-        foreach ($result as $one)
-        {
+        foreach ($result as $one) {
             unset($one['score']);
             $posts = $one;
         }

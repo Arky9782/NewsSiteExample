@@ -8,7 +8,6 @@
 
 namespace App\Service;
 
-
 use App\Entity\Post;
 use App\Interfaces\PostRepositoryInterface;
 
@@ -27,9 +26,9 @@ class PostManager
      */
     public function loadAllLatestPostsByPage(int $page)
     {
-            $posts = $this->postRepository->findAllLatestPostsByPage($page);
+        $posts = $this->postRepository->findAllLatestPostsByPage($page);
 
-            return $posts;
+        return $posts;
     }
 
 
@@ -41,9 +40,9 @@ class PostManager
      */
     public function loadPostBySlug(string $slug)
     {
-            $posts = $this->postRepository->findPostBySlug($slug);
+        $posts = $this->postRepository->findPostBySlug($slug);
 
-            return $posts;
+        return $posts;
     }
 
 
@@ -54,9 +53,9 @@ class PostManager
      */
     public function loadPostsByCategoryAndPage(string $category, int $page)
     {
-            $posts = $this->postRepository->findPostsByCategory($category, $page);
+        $posts = $this->postRepository->findPostsByCategory($category, $page);
 
-            return $posts;
+        return $posts;
     }
 
 
@@ -66,9 +65,9 @@ class PostManager
      */
     public function loadFamousPosts()
     {
-            $posts = $this->postRepository->getFamousPosts();
+        $posts = $this->postRepository->getFamousPosts();
 
-            return $posts;
+        return $posts;
     }
 
     /**
@@ -77,16 +76,16 @@ class PostManager
      */
     public function loadSimilarPostsByTags(Post $post)
     {
-            $posts = [];
-            foreach ($post->getTags() as $tag) {
-                $posts = $this->postRepository->getSimilarPostsByTagName($tag->getName(), $post->getId());
-            }
+        $posts = [];
+        foreach ($post->getTags() as $tag) {
+            $posts = $this->postRepository->getSimilarPostsByTagName($tag->getName(), $post->getId());
+        }
 
-            if(count($posts) > 4) {
-                $posts = array_slice($posts, 0, 4);
-            }
+        if (count($posts) > 4) {
+            $posts = array_slice($posts, 0, 4);
+        }
 
-            return $posts;
+        return $posts;
     }
 
 
@@ -97,9 +96,8 @@ class PostManager
      */
     public function loadPostsByTextAndPage(string $text, int $page)
     {
-            $posts = $this->postRepository->findPostsByTextAndPage($text, $page);
+        $posts = $this->postRepository->findPostsByTextAndPage($text, $page);
 
-            return $posts;
+        return $posts;
     }
-
 }

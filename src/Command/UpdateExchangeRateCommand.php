@@ -8,7 +8,6 @@
 
 namespace App\Command;
 
-
 use App\Entity\ExchangeRate;
 use App\Service\ExchangeRateParser;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,8 +45,7 @@ class UpdateExchangeRateCommand extends Command
 
         $rate = $rateRepository->find(1);
 
-        if(empty($rate))
-        {
+        if (empty($rate)) {
             $rate = new ExchangeRate();
         }
 
@@ -65,6 +63,4 @@ class UpdateExchangeRateCommand extends Command
 
         $output->writeln('Success!');
     }
-
-
 }
