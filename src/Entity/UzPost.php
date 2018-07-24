@@ -52,11 +52,6 @@ class UzPost
     private $created_at;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $meta_data;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $main;
@@ -176,25 +171,6 @@ class UzPost
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
-
-    public function getMetaData(): ?string
-    {
-        return $this->meta_data;
-    }
-
-    public function setMetaData(?string $meta_data): self
-    {
-        $this->meta_data = $meta_data;
-
-        return $this;
-    }
-
     public function addTag($tag)
     {
         $this->tags->add($tag);
@@ -250,7 +226,7 @@ class UzPost
 
     public function upload()
     {
-        if ($this->file == null) {
+        if ($this->file === null) {
             return;
         }
 

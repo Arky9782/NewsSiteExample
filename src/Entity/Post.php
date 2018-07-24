@@ -170,20 +170,6 @@ class Post
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
-
-    public function setMetaData(?string $meta_data): self
-    {
-        $this->meta_data = $meta_data;
-
-        return $this;
-    }
-
     /**
      * @return mixed
      */
@@ -241,7 +227,7 @@ class Post
 
     public function upload()
     {
-        if ($this->file == null) {
+        if ($this->file === null) {
             return;
         }
 
