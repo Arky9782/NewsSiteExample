@@ -10,7 +10,7 @@ use Doctrine\ORM\Query\AST\Functions\FunctionNode;
  */
 class MatchAgainst extends FunctionNode
 {
-    public $columns = array();
+    public $columns = [];
     public $needle;
     public $mode;
 
